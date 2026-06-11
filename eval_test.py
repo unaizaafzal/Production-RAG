@@ -25,9 +25,9 @@ langfuse = get_client()
 # --- BENCHMARK GOLDEN EVALUATION DATASET ---
 GOLDEN_DATASET = [
     {
-        "question": "What is a Grand Slam Offer?",
-        "expected_ground_truth": "An offer you make people so good they would feel stupid saying no.",
-        "namespace": "ns_2b85a157" # Uses your active indexed namespace
+        "question": "What is the purpose of the attention mechanism in the Transformer model?",
+        "expected_ground_truth": "The attention mechanism allows the model to focus on different parts of the input sequence when producing each output token, enabling it to capture dependencies regardless of distance.",
+        "namespace": "ns_2b85a157"
     }
 ]
 
