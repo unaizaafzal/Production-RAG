@@ -1,6 +1,6 @@
 # Production RAG Engine with Monitoring & Observability
 
-> A domain-specific document Q&A system with hybrid retrieval, cross-encoder reranking, citation enforcement, and a fully instrumented observability layer.
+> A domain-specific document Q&A system with hybrid retrieval, cross-encoder reranking, citation enforcement, and a fully instrumented observability & Monitering layer.
 
 Built with **Python · LangChain · Pinecone · Cohere · Groq · Streamlit · Langfuse · HuggingFace**
 
