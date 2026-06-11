@@ -178,7 +178,7 @@ def run_monitored_rag_cycle(user_input, chunks):
     # Securely propagate session details and custom metadata across the trace execution scope
     with propagate_attributes(
         session_id=st.session_state.session_id,
-        user_id="unaiza_afzal",
+        user_id="unaiza",
         tags=["production", "streamlit-frontend"]
     ):
         # Step A: Contextualize
@@ -189,7 +189,7 @@ def run_monitored_rag_cycle(user_input, chunks):
         
         # Step C: Answer Generation
         qa_prompt = ChatPromptTemplate.from_messages([
-            ("system", "You are an expert technical assistant analyzing specialized documentation. Answer the question using ONLY the provided context below. If the context does not contain the answer, say 'I cannot find the answer in the provided documents.'\n\nContext:\n{context}"),
+            ("system", "You are an expert technical assistant analyzing specialized documentation. Answer the question using ONLY the provided context below. You MUST cite sources inline after each claim using the format [Source: filename, Page: X]. If the context does not contain the answer, say 'I cannot find the answer in the provided documents.'\n\nContext:\n{context}"),
             MessagesPlaceholder(variable_name="chat_history"),
             ("human", "{question}")
         ])
@@ -202,28 +202,6 @@ def run_monitored_rag_cycle(user_input, chunks):
         }, config={"callbacks": [langfuse_handler]})
         
         return ai_response
-    
-    # Step A: Contextualize
-    standalone_search = contextualize_query(user_input, st.session_state.chat_history, langfuse_handler)
-    
-    # Step B: Retrieval
-    context_string = execute_hybrid_retrieval(standalone_search, chunks)
-    
-    # Step C: Answer Generation
-    qa_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert technical assistant analyzing specialized documentation. Answer the question using ONLY the provided context below. If the context does not contain the answer, say 'I cannot find the answer in the provided documents.'\n\nContext:\n{context}"),
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("human", "{question}")
-    ])
-    
-    chain = qa_prompt | llm | StrOutputParser()
-    ai_response = chain.invoke({
-        "context": context_string,
-        "chat_history": st.session_state.chat_history,
-        "question": user_input
-    }, config={"callbacks": [langfuse_handler]})
-    
-    return ai_response
 
 # --- UI VISUAL LAYOUT ---
 st.title("Enterprise Multi-Tenant RAG Platform")

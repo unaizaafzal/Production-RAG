@@ -81,9 +81,8 @@ def run_automated_evaluation_suite():
         generated_answer = chain.invoke({"context": context, "question": case["question"]})
         
         # 3. Grade using LLM-as-a-judge
-        # 3. Grade using LLM-as-a-judge
         faithfulness_score = judge_faithfulness(context, generated_answer)
-        print(f"✨ LLM-as-a-Judge Faithfulness Score: {faithfulness_score * 100}%")
+        print(f"LLM-as-a-Judge Faithfulness Score: {faithfulness_score * 100}%")
         
         # Log evaluation metrics directly into Langfuse using the modern Python SDK method
         eval_trace_id = f"eval_{int(time.time())}"
@@ -99,22 +98,6 @@ def run_automated_evaluation_suite():
             print(" REGRESSION DETECTED: Faithfulness score dropped below target enterprise threshold!")
             all_passed = False
         
-        # Log evaluation metrics directly into Langfuse for persistent engineering visibility
-        # Log evaluation metrics directly into Langfuse using the modern Python SDK method
-        # We pass a generated or associated trace ID to attach the metric cleanly
-        eval_trace_id = f"eval_{int(time.time())}"
-        langfuse.create_score(
-            trace_id=eval_trace_id,
-            name="automated-faithfulness",
-            value=faithfulness_score,
-            comment=f"Automated verification for question: {case['question']}"
-        )
-        
-        # Performance Threshold Gate (e.g., must be higher than 80% grounded)
-        if faithfulness_score < 0.8:
-            print(" REGRESSION DETECTED: Faithfulness score dropped below target enterprise threshold!")
-            all_passed = False
-            
     if all_passed:
         print("\n All quality gates passed perfectly. System verified for release.")
         exit(0)

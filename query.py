@@ -43,7 +43,7 @@ def contextualize_query(user_query: str, chat_history: list, llm: ChatGroq) -> s
     
     chain = contextualize_prompt | llm | StrOutputParser()
     standalone_query = chain.invoke({"chat_history": chat_history, "question": user_query})
-    print(f"🔄 Contextualized Search Query: '{standalone_query}'")
+    print(f"Contextualized Search Query: '{standalone_query}'")
     return standalone_query
 
 def retrieve_hybrid_and_cohere_rerank(query: str, index_name: str, chunks: list, pc_index, embeddings_model, co_client, top_n_to_llm: int = 4):
@@ -109,7 +109,7 @@ def start_chat_session():
     # This array stores our chat messages during runtime
     chat_history = []
     
-    print("\n🚀 RAG Chat Session Active! Type 'exit' or 'quit' to end.")
+    print("\n RAG Chat Session Active! Type 'exit' or 'quit' to end.")
     print("==========================================================")
     
     while True:
@@ -135,6 +135,7 @@ def start_chat_session():
                 ("system", (
                     "You are an expert technical assistant analyzing highly specialized documentation.\n"
                     "Answer the user's question using ONLY the provided context below. "
+                    "You MUST cite your sources. After each claim, reference the source like this: [Source: filename, Page: X]. "
                     "If the context does not contain the answer, say 'I cannot find the answer in the provided documents.'\n\n"
                     "Context:\n{context}"
                 )),

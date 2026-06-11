@@ -15,7 +15,7 @@ def load_and_chunk_docs(data_dir: str, chunk_size: int = 1200, chunk_overlap: in
     all_docs = []
     
     if not os.path.exists(data_dir):
-        print(f"❌ Error: Data directory '{data_dir}' does not exist.")
+        print(f"Error: Data directory '{data_dir}' does not exist.")
         return []
         
     for file in os.listdir(data_dir):
