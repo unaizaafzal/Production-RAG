@@ -35,7 +35,7 @@ User Query
     │
     ▼
 ┌─────────────────────────────────────┐
-│         Query Contextualization     │
+│     Query Contextualization         │
 │  Rewrites follow-up questions into  │
 │  standalone searchable queries      │
 │  using conversation history         │
